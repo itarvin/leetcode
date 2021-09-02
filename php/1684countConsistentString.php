@@ -1,0 +1,71 @@
+<?php
+/**
+ * 1684. 统计一致字符串的数目
+给你一个由不同字符组成的字符串 allowed 和一个字符串数组 words 。如果一个字符串的每一个字符都在 allowed 中，就称这个字符串是 一致字符串 。
+
+请你返回 words 数组中 一致字符串 的数目。
+
+
+
+示例 1：
+
+输入：allowed = "ab", words = ["ad","bd","aaab","baa","badab"]
+输出：2
+解释：字符串 "aaab" 和 "baa" 都是一致字符串，因为它们只包含字符 'a' 和 'b' 。
+示例 2：
+
+输入：allowed = "abc", words = ["a","b","c","ab","ac","bc","abc"]
+输出：7
+解释：所有字符串都是一致的。
+示例 3：
+
+输入：allowed = "cad", words = ["cc","acd","b","ba","bac","bad","ac","d"]
+输出：4
+解释：字符串 "cc"，"acd"，"ac" 和 "d" 是一致字符串。
+
+
+提示：
+
+1 <= words.length <= 104
+1 <= allowed.length <= 26
+1 <= words[i].length <= 10
+allowed 中的字符 互不相同 。
+words[i] 和 allowed 只包含小写英文字母。
+ */
+/*
+*
+*/
+ class Solution {
+
+     /**
+      * @param String $allowed
+      * @param String[] $words
+      * @return Integer
+      */
+    function countConsistentStrings($allowed, $words) {
+        $result = 0;
+        foreach ($words as $key => $item) {
+            $temp = [];
+            for ($i=0; $i < strlen($item); $i++) {
+                $temp[$i] = 0;
+                if (strpos($allowed, $item[$i]) === False) $temp[$i] = 1;
+            }
+            if (array_sum($temp) == 0) $result += 1;
+        }
+        return $result;
+    }
+}
+
+$t1 = microtime(true);
+/****************************... 执行代码开始 ...****************************/
+$object = new Solution();
+$allowed = "ab";
+$words = ["ad","bd","aaab","baa","badab"];
+$res = $object->countConsistentStrings($allowed, $words);
+$t2 = microtime(true);
+/****************************... 执行代码结束 ...****************************/
+var_dump($res);
+echo '<hr />';
+var_dump('耗时'.round($t2-$t1,3).'秒');
+echo '<hr />';
+var_dump('Now memory_get_usage: ' . memory_get_usage());
